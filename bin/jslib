@@ -23,5 +23,10 @@ gem 'sinatra'
 gem 'shotgun'
 EOF
 end
+File.open File.join(Dir.pwd, ARGV[0],'Guardfile'), 'w+' do |f|
+  f.puts <<EOF
+guard 'coffeescript', :input => 'coffee-scripts', :output => 'javascripts', :bare => true
+EOF
+end
 File.new File.join(Dir.pwd, ARGV[0],'javascripts',"#{ARGV[0]}.js"), 'w+'
 File.new File.join(Dir.pwd, ARGV[0],'coffee-scripts',"#{ARGV[0]}.coffee"), 'w+'
