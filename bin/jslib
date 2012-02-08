@@ -1,32 +1,5 @@
 #!/usr/bin/env ruby
-require 'git'
-Git.init File.join(Dir.pwd, ARGV[0])
-Dir.mkdir File.join(Dir.pwd, ARGV[0],'javascripts')
-Dir.mkdir File.join(Dir.pwd, ARGV[0],'coffee-scripts')
-Dir.mkdir File.join(Dir.pwd, ARGV[0],'examples')
-Dir.mkdir File.join(Dir.pwd, ARGV[0],'utils')
-File.new File.join(Dir.pwd, ARGV[0],'README'), 'w+'
-File.open File.join(Dir.pwd, ARGV[0],'Gemfile'), 'w+' do |f|
-  f.puts <<EOF
-source "http://rubygems.org"
-gem 'jasmine'
-gem 'rake'
-gem 'guard'
-gem 'guard-coffeescript'
-gem 'guard-process'
-EOF
-end
-File.open File.join(Dir.pwd, ARGV[0],'Gemfile'), 'w+' do |f|
-  f.puts <<EOF
-source "http://rubygems.org"
-gem 'sinatra'
-gem 'shotgun'
-EOF
-end
-File.open File.join(Dir.pwd, ARGV[0],'Guardfile'), 'w+' do |f|
-  f.puts <<EOF
-guard 'coffeescript', :input => 'coffee-scripts', :output => 'javascripts', :bare => true
-EOF
-end
-File.new File.join(Dir.pwd, ARGV[0],'javascripts',"#{ARGV[0]}.js"), 'w+'
-File.new File.join(Dir.pwd, ARGV[0],'coffee-scripts',"#{ARGV[0]}.coffee"), 'w+'
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
+require 'jslib'
+
+Jslib::CommandParser.new
