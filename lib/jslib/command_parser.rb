@@ -1,23 +1,35 @@
 module Jslib
   class CommandParser
-    def initialize
+    attr_reader :generator
+    def initialize dir
       require 'optparse'
       options = {}
       OptionParser.new do |opts|
-        opts.on('-n', '--new [project]') do |v|
-          options[:new] = v
-        end
-        opts.on('-t', '--template [template]') do |v|
-          options[:template] = [v]
-        end
-        opts.on('-t', '--template [template]') do |v|
-          options[:template] = [v]
-          opts.on('--name [name]') do |vv|
-            options[:template_name] = [vv]
+        if ARGV[0] =~ /^n+/
+          options[:project_name] = ARGV[1]
+          options[:sxss] = 'sass'
+          opts.on('--css [PARTIAL]', ['sass','scss'], "Select extension of CSS (sass (default), scss)") do |v|
+            options[:sxss] = v
+          end
+          #...
+          opts.on_tail do
+            @generator = Generator::Project.new dir, options
+          end
+        elsif ARGV[0] =~ /^p+/
+          opts.on('-n', '--name [PARTIAL]', Template::list, "Select partial (#{Template::list.join(', ')})") do |v|
+            options[:name] = v
+          end
+          #...
+          opts.on_tail do
+            @generator = Generator::Partial.new dir, options
+          end
+        elsif ARGV[0] =~ /^d+/
+          #...
+          opts.on_tail do
+            @generator = Generator::Downloader.new dir, options
           end
         end
       end.parse!
-      p options
     end
   end
 end

@@ -2,4 +2,4 @@
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 require 'jslib'
 
-Jslib::CommandParser.new
+Jslib::Generator::run!

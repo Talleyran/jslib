@@ -1,0 +1,14 @@
+<% #name %>Ext.namespace "gxp.plugins"
+gxp.plugins.<%= name %> = Ext.extend(gxp.plugins.Tool,
+  ptype: "gxp_measure"
+  constructor: (config) ->
+    gxp.plugins.<%= name %>.superclass.constructor.apply this, arguments
+
+  destroy: ->
+    @button = null
+    gxp.plugins.<%= name %>.superclass.destroy.apply this, arguments
+
+  addActions: ->
+    gxp.plugins.<%= name %>.superclass.addActions.apply this, [ @button ]
+)
+Ext.preg gxp.plugins.<%= name %>::ptype, gxp.plugins.<%= name %>

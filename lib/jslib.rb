@@ -1,3 +1,5 @@
 require 'find'
 require 'jslib/template'
+require 'jslib/generator'
+require 'jslib/generator/project'
 require 'jslib/command_parser'

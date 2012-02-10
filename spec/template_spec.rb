@@ -23,11 +23,17 @@ describe "Template" do
 
   it "should contain methods for each template" do
     dir = File.join( [File.dirname(__FILE__), '..', 'lib', 'jslib', 'templates'] )
-    Find.find dir do |f|
+    Dir["#{dir}/**/*.{erb}"].each do |f|
       short_file_name = f[dir.size+1..-1]
       unless File.directory?( f ) || short_file_name[0..0] == '.'
         Template::public_methods.include?(Template::tamplate_place_to_method_name(short_file_name).to_sym).should be_true
       end
     end
   end
+
+  it "should add each javascript template to template's list" do
+    dir = File.join( [File.dirname(__FILE__), '..', 'lib', 'jslib', 'templates', 'javascripts'] )
+    Dir["#{dir}/**/*.{erb}"].size.should eq(Template::list.size)
+  end
+
 end
