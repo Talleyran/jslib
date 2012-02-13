@@ -1,14 +1,22 @@
-<% #name %>Ext.namespace "gxp.plugins"
-gxp.plugins.<%= name %> = Ext.extend(gxp.plugins.Tool,
-  ptype: "gxp_measure"
+<%#@name%>Ext.namespace "gxp.plugins"
+gxp.plugins.<%= @name.camelize %> = Ext.extend(gxp.plugins.Tool,
+  ptype: "gxp_<%= @name.delete "_" %>"
+  <%= @name.camelize(:lower) %>Tooltip: '<%= @name.humanize %>'
+  <%= @name.camelize(:lower) %>Text: '<%= @name.humanize %>'
   constructor: (config) ->
-    gxp.plugins.<%= name %>.superclass.constructor.apply this, arguments
+    gxp.plugins.<%= @name.camelize %>.superclass.constructor.apply this, arguments
 
-  destroy: ->
-    @button = null
-    gxp.plugins.<%= name %>.superclass.destroy.apply this, arguments
+  init: (target)->
+    gxp.plugins.<%= @name.camelize %>.superclass.init.apply this, arguments
 
   addActions: ->
-    gxp.plugins.<%= name %>.superclass.addActions.apply this, [ @button ]
+    @button = new Ext.Button(
+      text: @<%= @name.camelize(:lower) %>Text
+      tooltip: @<%= @name.camelize(:lower) %>Tooltip
+    )
+    gxp.plugins.<%= @name.camelize %>.superclass.addActions.apply this, [ @button ]
+
+  addOutput: ->
+    gxp.plugins.<%= @name.camelize %>.superclass.constructor.addOutput this, arguments
 )
-Ext.preg gxp.plugins.<%= name %>::ptype, gxp.plugins.<%= name %>
+Ext.preg gxp.plugins.<%= @name.camelize %>::ptype, gxp.plugins.<%= @name.camelize %>

@@ -9,21 +9,21 @@ module Jslib
         require 'git'
         Git.init File.join(@dir, @options[:project_name])
         File.open File.join(@dir, @options[:project_name],'README'), 'w+' do |f|
-          f.puts Template::readme_erb
+          f.puts Template::templates[:readme_erb].result
         end
         File.open File.join(@dir, @options[:project_name],'Gemfile'), 'w+' do |f|
-          f.puts Template::gemfile_erb
+          f.puts Template::templates[:gemfile_erb].result
         end
         File.open File.join(@dir, @options[:project_name],'Guardfile'), 'w+' do |f|
-          f.puts Template::guardfile_erb
+          f.puts Template::templates[:guardfile_erb].result @options[:sxss]
         end
 
         #lib
 
         Dir.mkdir File.join(@dir, @options[:project_name],'lib')
-        Dir.mkdir File.join(@dir, @options[:project_name],'lib', 'coffee-scripts')
+        Dir.mkdir File.join(@dir, @options[:project_name],'lib', 'coffeescripts')
         Dir.mkdir File.join(@dir, @options[:project_name],'lib', "#{@options[:sxss]}")
-        File.new File.join(@dir, @options[:project_name],'lib','coffee-scripts',"#{@options[:project_name]}.coffee"), 'w+'
+        File.new File.join(@dir, @options[:project_name],'lib','coffeescripts',"#{@options[:project_name]}.coffee"), 'w+'
 
 
         #public
@@ -36,10 +36,11 @@ module Jslib
 
         #other
 
+        Dir.mkdir File.join(@dir, @options[:project_name],'templates')
         Dir.mkdir File.join(@dir, @options[:project_name],'utils')
         Dir.mkdir File.join(@dir, @options[:project_name],'examples')
         File.open File.join(@dir, @options[:project_name],'utils','Gemfile'), 'w+' do |f|
-          f.puts Template::utils_gemfile_erb
+          f.puts Template::templates[:utils_gemfile_erb].result
         end
       end
     end

@@ -1,2 +1,2 @@
-<%#sxss%>guard 'lib/coffeescript', input: 'lib/coffee-scripts', output: 'public/javascripts', bare: true
-guard 'lib/<%= sxss %>', input: 'lib/<%= sxss %>', output: 'public/stylesheets', bare: true
+<%#@sxss%>guard 'coffeescript', input: 'lib/coffeescripts', output: 'public/javascripts', bare: true, all_on_start: true
+guard '<%= @sxss %>', input: 'lib/<%= @sxss %>', output: 'public/stylesheets', all_on_start: true

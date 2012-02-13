@@ -16,9 +16,10 @@ module Jslib
             @generator = Generator::Project.new dir, options
           end
         elsif ARGV[0] =~ /^p+/
-          opts.on('-n', '--name [PARTIAL]', Template::list, "Select partial (#{Template::list.join(', ')})") do |v|
-            options[:name] = v
+          opts.on('-k', '--kind [PARTIAL]', Template::list, "Select partial (#{Template::list.join(', ')})") do |v|
+            options[:kind] = v
           end
+          options[:partial_name] = ARGV[1]
           #...
           opts.on_tail do
             @generator = Generator::Partial.new dir, options
